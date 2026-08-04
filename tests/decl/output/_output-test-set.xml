@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../admin/catalog-schema.xsd" type="application/xml" schematypens="http://www.w3.org/2001/XMLSchema" ?>
 <test-set xmlns:xs="http://www.w3.org/2001/XMLSchema"
    xmlns="http://www.w3.org/2012/10/xslt-test-catalog" name="output">
 
@@ -467,7 +468,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Accept HTML5 form of meta/@charset (despite being technically disallowed by Serialization 3.1)"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Replaced output021b.out with serialization-matches to allow for: optional whitespace before and after the doctype declaration; optional whitespace before end of self-closing tag; and for meta/@charset instead of meta/@http-equiv."/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -479,8 +480,22 @@
       <result>
          <any-of>
             <assert-serialization method="xhtml" file="output021.out"/>
-            <assert-serialization method="xhtml" file="output021b.out"/>
-            <assert-serialization method="xhtml" file="output021c.out"/>
+            <all-of>
+                <serialization-matches><![CDATA[<\?xml version="1.0" encoding="UTF-8"\?>\s*<!DOCTYPE html>\s*<html xmlns="http://www.w3.org/1999/xhtml"><head>]]></serialization-matches>
+                <any-of>
+         			<serialization-matches><![CDATA[<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"\s*/><script>]]></serialization-matches>
+         			<serialization-matches><![CDATA[<head><meta charset="UTF-8"\s*/><script>]]></serialization-matches>
+         		</any-of>    
+            	<serialization-matches><![CDATA[<script>
+        
+        document.write\("&lt;p&gt;hi oren&lt;/p&gt;"\);
+        if\(\(2 &lt; 5\) &amp; \(6 &lt; 3\)\)
+        \{
+          ...
+        \}
+        
+      </script></head><body></body></html>]]></serialization-matches>     		         		
+         	</all-of>
          </any-of>
       </result>
    </test-case>
@@ -490,7 +505,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Accept HTML5 form of meta/@charset (despite being technically disallowed by Serialization 3.1)"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Allowed for: optional whitespace before and after the doctype declaration; optional whitespace before end of self-closing tag; and for meta/@charset instead of meta/@http-equiv."/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -502,8 +517,18 @@
       <result>
          <any-of>
             <assert-serialization method="xhtml" file="output022.out"/>
-            <assert-serialization method="xhtml" file="output022b.out"/>
-            <assert-serialization method="xhtml" file="output022c.out"/>
+         	<all-of>
+         		<serialization-matches><![CDATA[<\?xml version="1.0" encoding="UTF-8"\?>\s*<!DOCTYPE html>\s*<html xmlns="http://www.w3.org/1999/xhtml"><head>]]></serialization-matches>
+         		<any-of>
+         			<serialization-matches><![CDATA[<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"\s*/><style>]]></serialization-matches>
+         			<serialization-matches><![CDATA[<head><meta charset="UTF-8"\s*/><style>]]></serialization-matches>
+         		</any-of>    
+         		<serialization-matches><![CDATA[<style>
+        
+        &lt;&gt;&amp;
+        
+      </style></head><body></body></html>]]></serialization-matches>     		         		
+         	</all-of>
          </any-of>
       </result>
    </test-case>
@@ -809,7 +834,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Final whitespace in empty elements is not required in XHTML 5.0"/>
+  	  <modified by="Sheila Thomson" on="2026-07-07" change="Allowed for space before the end of a self-closing element to be optional." />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -825,9 +850,8 @@
                <serialization-matches><![CDATA[<\?xml]]></serialization-matches>
                <serialization-matches><![CDATA[<!DOCTYPE (HTML|html)>]]></serialization-matches>
                <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml">]]></serialization-matches>
-               <serialization-matches><![CDATA[<area\s+tabindex="2"\s*/><base\s*/><basefont></basefont><br\s*/><col\s*/><frame></frame>]]></serialization-matches>
-               <serialization-matches><![CDATA[<hr\s+width="100"\s*/><img\s*/><input\s*/><isindex></isindex><link\s*/>]]></serialization-matches>
-               <serialization-matches><![CDATA[<meta\s*/><param\s*/></html>]]></serialization-matches>
+            	<serialization-matches><![CDATA[<area\s+tabindex="2"\s?/><base\s?/><basefont></basefont><br\s?/><col\s?/><frame></frame>]]></serialization-matches>
+            	<serialization-matches><![CDATA[<hr\s+width="100"\s?/><img\s?/><input\s?/><isindex></isindex><link\s?/><meta\s?/><param\s?/></html>]]></serialization-matches>
             </all-of>
          </any-of>
       </result>
@@ -839,7 +863,7 @@
       <created by="Debbie Lockett" on="2014-08-07"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Final whitespace in empty elements is not required in XHTML 5.0"/>
+      <modified by="Sheila Thomson" on="2026-07-07" change="Allowed for space before the end of a self-closing element to be optional." />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT30+"/>
@@ -855,8 +879,8 @@
                <serialization-matches><![CDATA[<\?xml]]></serialization-matches>
                <serialization-matches><![CDATA[<!DOCTYPE (HTML|html)>]]></serialization-matches>
                <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml">]]></serialization-matches>
-               <serialization-matches><![CDATA[<area\s+tabindex="2"\s*/><base\s*/><basefont></basefont><br\s*/><col\s*/><frame></frame>]]></serialization-matches>
-               <serialization-matches><![CDATA[<hr\s+width="100"\s*/><img\s*/><input\s*/><isindex></isindex><link\s*/><meta\s*/><param\s*/></html>]]></serialization-matches>
+               <serialization-matches><![CDATA[<area\s+tabindex="2"\s?/><base\s?/><basefont></basefont><br\s?/><col\s?/><frame></frame>]]></serialization-matches>
+               <serialization-matches><![CDATA[<hr\s+width="100"\s?/><img\s?/><input\s?/><isindex></isindex><link\s?/><meta\s?/><param\s?/></html>]]></serialization-matches>
             </all-of>
          </any-of>
       </result>
@@ -868,7 +892,7 @@
       <created by="Debbie Lockett" on="2014-08-07"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Final whitespace in empty elements is not required in XHTML 5.0"/>
+      <modified by="Sheila Thomson" on="2026-07-07" change="Allowed for space before the end of a self-closing element to be optional." />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT30+"/>
@@ -884,8 +908,8 @@
                <serialization-matches><![CDATA[<\?xml]]></serialization-matches>
                <serialization-matches><![CDATA[<!DOCTYPE (HTML|html)>]]></serialization-matches>
                <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml">]]></serialization-matches>
-               <serialization-matches><![CDATA[<area\s+tabindex="2"\s*/><base\s*/><basefont></basefont><br\s*/><col\s*/><frame></frame>]]></serialization-matches>
-               <serialization-matches><![CDATA[<hr\s+width="100"\s*/><img\s*/><input\s*/><isindex></isindex><link\s*/><meta\s*/><param\s*/></html>]]></serialization-matches>
+               <serialization-matches><![CDATA[<area\s+tabindex="2"\s?/><base\s?/><basefont></basefont><br\s?/><col\s?/><frame></frame>]]></serialization-matches>
+               <serialization-matches><![CDATA[<hr\s+width="100"\s?/><img\s?/><input\s?/><isindex></isindex><link\s?/><meta\s?/><param\s?/></html>]]></serialization-matches>
             </all-of>
          </any-of>
       </result>
@@ -1012,7 +1036,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="Tim Mills" on="2013-01-29" change="Use serialization-matches"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 meta element"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1022,21 +1046,18 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-            <all-of>
-               <serialization-matches><![CDATA[<meta charset="UTF-8">]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-         </any-of>   
+      	<all-of>
+	         <any-of>
+	         	<all-of>
+	         		<serialization-matches flags="i"><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+	         		<serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>         			
+	         		<serialization-matches flags="i"><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+	         		<serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+	         	</all-of>
+	         	<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>]]></serialization-matches>         	
+	         </any-of>
+      		<serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
+      	</all-of>
       </result>
    </test-case>
 
@@ -1046,7 +1067,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="Tim Mills" on="2013-01-29" change="Use serialization-matches"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 meta element"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1056,21 +1077,20 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-            <all-of>
-               <serialization-matches><![CDATA[<meta charset="UTF-8">]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<meta.*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-         </any-of>
+      	<all-of>
+	      	<any-of>
+		         <all-of>
+		            <serialization-matches flags="i"
+		               ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+		            <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
+		            <serialization-matches flags="i"
+		               ><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+		            <serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+		         </all-of>
+	      		<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>]]></serialization-matches>
+	      	</any-of>
+      		<serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
+      	</all-of>
       </result>
    </test-case>
 
@@ -1079,7 +1099,7 @@
          element.</description>
       <created by="Debbie Lockett" on="2014-08-07"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 meta element"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT30+"/>
@@ -1089,53 +1109,51 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-            <serialization-matches flags="i"><![CDATA[<HEAD>[^<]*<meta charset="utf-8">[^<]*</HEAD>]]></serialization-matches>
-         </any-of>
+      	<all-of>
+	      	<any-of>
+		         <all-of>
+		            <serialization-matches flags="i"
+		               ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+		            <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
+		            <serialization-matches flags="i"
+		               ><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+		            <serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+		         </all-of>
+	      		<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>]]></serialization-matches>      		
+	      	</any-of>
+      		<serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
+      	</all-of>
       </result>
    </test-case>
 
-   <test-case name="output-0124b">
-      <description>Test HTML output with include-content-type="1", the result tree has a 'head'
-         element.</description>
-      <created by="Debbie Lockett" on="2014-08-07"/>
-      <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow XHTML5 form of meta/charset"/>
-      <environment ref="output-01"/>
-      <dependencies>
-         <spec value="XSLT30+"/>
-      </dependencies>
-      <test>
-         <stylesheet file="output-0124b.xsl"/>
-         <output serialize="yes"/>
-      </test>
-      <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-            <all-of>
-               <serialization-matches><![CDATA[charset="UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-         </any-of>
-      </result>
-   </test-case>
+	<test-case name="output-0124b">
+		<description>Test HTML output with include-content-type="1", the result tree has a 'head' element.</description>
+		<created by="Debbie Lockett" on="2014-08-07"/>
+		<modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
+		<modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv"/>
+		<environment ref="output-01"/>
+		<dependencies>
+			<spec value="XSLT30+"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0124b.xsl"/>
+			<output serialize="yes"/>
+		</test>
+		<result>
+			<all-of>
+				<any-of>
+					<all-of>
+						<serialization-matches flags="i"><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+						<serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
+						<serialization-matches flags="i"><![CDATA[content="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+						<serialization-matches><![CDATA[="application/xhtml-xml; charset=UTF-8"]]></serialization-matches>
+					</all-of>
+					<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>]]></serialization-matches>
+				</any-of>
+				<serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
+			</all-of>
+		</result>
+	</test-case>
 
    <test-case name="output-0125">
       <description>Test HTML output with include-content-type value set to "no".</description>
@@ -1225,7 +1243,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow XHTML5 form of meta/charset"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Alternative result for XHTML5 using meta charset instead of meta http-equiv"/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1235,16 +1253,19 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="application/xhtml-xml;\s*charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<head>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</head>]]></serialization-matches>
-            </all-of>
-            <serialization-matches flags="i"><![CDATA[meta charset="UTF-8"]]></serialization-matches>
-         </any-of>
+         <all-of>
+         	<any-of>
+         		<all-of>
+	         		<serialization-matches flags="i"
+	         			><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+	         		<serialization-matches flags="i"
+	         			><![CDATA[content="application/xhtml-xml;\s*charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"
+         			><![CDATA[charset="UTF-8"]]></serialization-matches>
+         	</any-of>            
+            <serialization-matches><![CDATA[<head>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</head>]]></serialization-matches>
+         </all-of>
       </result>
    </test-case>
 
@@ -1313,7 +1334,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="Tim Mills" on="2013-01-29" change="Use serialization-matches"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow XHTML5 form of meta/charset"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Alternative result for XHTML5 using meta charset instead of meta http-equiv"/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1323,18 +1344,21 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="text/html; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[="text/html; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<\?xml version="1.0" encoding="UTF-8"\?>]]></serialization-matches>
-            </all-of>
-            <serialization-matches><![CDATA[charset="UTF-8"]]></serialization-matches>
-         </any-of>
+         <all-of>
+         	<any-of>
+         		<all-of>
+		            <serialization-matches flags="i"
+		               ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+		            <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
+		            <serialization-matches flags="i"
+		               ><![CDATA[content="text/html; charset=UTF-8"]]></serialization-matches>
+		            <serialization-matches><![CDATA[="text/html; charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"
+         			><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s*/>]]></serialization-matches>
+         	</any-of>
+            <serialization-matches><![CDATA[<\?xml version="1.0" encoding="UTF-8"\?>]]></serialization-matches>
+         </all-of>
       </result>
    </test-case>
 
@@ -1368,7 +1392,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="XHTML5 doesn't require trailing space in empty tags"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Space optional before slash ending self-closing element."/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1379,7 +1403,7 @@
       </test>
       <result>
          <all-of>
-            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s*/>]]></serialization-matches>
+            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s?/>]]></serialization-matches>
             <serialization-matches><![CDATA[<Option\s+selected="selected"></Option></body></html>]]></serialization-matches>
          </all-of>
       </result>
@@ -1391,7 +1415,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="XHTML5 doesn't require trailing space in empty tags"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Space optional before slash ending self-closing element."/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1402,7 +1426,7 @@
       </test>
       <result>
          <all-of>
-            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s*/>]]></serialization-matches>
+            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s?/>]]></serialization-matches>
             <serialization-matches><![CDATA[<Option\s+selected="selected"></Option></body></html>]]></serialization-matches>
          </all-of>
       </result>
@@ -1414,7 +1438,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="XHTML5 doesn't require trailing space in empty tags"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Space optional before slash ending self-closing element."/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1425,7 +1449,7 @@
       </test>
       <result>
          <all-of>
-            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s*/>]]></serialization-matches>
+            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s?/>]]></serialization-matches>
             <serialization-matches><![CDATA[<Option\s+selected="selected"></Option></body></html>]]></serialization-matches>
          </all-of>
       </result>
@@ -1438,7 +1462,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-14" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="XHTML5 doesn't require trailing space in empty tags"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Space optional before slash ending self-closing element."/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1449,7 +1473,7 @@
       </test>
       <result>
          <all-of>
-            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s*/>]]></serialization-matches>
+            <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml"><body><br\s?/>]]></serialization-matches>
             <serialization-matches><![CDATA[<Option\s+selected="selected"></Option></body></html>]]></serialization-matches>
          </all-of>
       </result>
@@ -1733,7 +1757,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Alternative result for XHTML5 using meta charset instead of meta http-equiv"/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1746,14 +1770,15 @@
          <all-of>
             <serialization-matches><![CDATA[html\s*xmlns="http://www.w3.org/1999/xhtml"]]></serialization-matches>
             <any-of>
-               <all-of>
-                  <serialization-matches flags="i"
-                     ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-                  <serialization-matches flags="i"
-                     ><![CDATA[content="text/html;\s*charset=UTF-8"]]></serialization-matches>
-               </all-of>
-               <serialization-matches flags="i"><![CDATA[charset="UTF-8"]]></serialization-matches>
-            </any-of>
+            	<all-of>
+            		<serialization-matches flags="i"
+            			><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+            		<serialization-matches flags="i"
+            			><![CDATA[content="application/xhtml-xml;\s*charset=UTF-8"]]></serialization-matches>
+            	</all-of>
+            	<serialization-matches flags="i"
+            		><![CDATA[<head><meta\s+charset="UTF-8"\s?/>]]></serialization-matches>
+            </any-of>         	
             <serialization-matches><![CDATA[<head>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</head>]]></serialization-matches>
          </all-of>
       </result>
@@ -1765,7 +1790,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Alternative result for XHTML5 using meta charset instead of meta http-equiv"/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1777,15 +1802,15 @@
       <result>
          <all-of>
             <serialization-matches><![CDATA[html\s*xmlns="http://www.w3.org/1999/xhtml"]]></serialization-matches>
-            <any-of>
-               <all-of>
-                  <serialization-matches flags="i"
-                     ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-                  <serialization-matches flags="i"
-                     ><![CDATA[content="text/html;\s*charset=UTF-8"]]></serialization-matches>
-               </all-of>
-               <serialization-matches flags="i"><![CDATA[charset="UTF-8"]]></serialization-matches>
-            </any-of>
+         	<any-of>
+         		<all-of>
+	         		<serialization-matches flags="i"
+	         			><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+	         		<serialization-matches flags="i"
+	         			><![CDATA[content="text/html;\s*charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"><![CDATA[<head><meta\s+charset="UTF-8"\s?/></head>]]></serialization-matches>
+         	</any-of>            
             <serialization-matches><![CDATA[<head>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</head>]]></serialization-matches>
          </all-of>
       </result>
@@ -1798,7 +1823,7 @@
       <created by="XSLT Editors" on="2012-11-07"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+      <modified by="Sheila Thomson" on="2026-07-03" change="Alternative result for XHTML5 using meta charset instead of meta http-equiv"/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1810,15 +1835,15 @@
       <result>
          <all-of>
             <serialization-matches><![CDATA[html\s*xmlns="http://www.w3.org/1999/xhtml"]]></serialization-matches>
-            <any-of>
-               <all-of>
-                  <serialization-matches flags="i"
-                     ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-                  <serialization-matches flags="i"
-                     ><![CDATA[content="text/html;\s*charset=UTF-8"]]></serialization-matches>
-               </all-of>
-               <serialization-matches flags="i"><![CDATA[charset="UTF-8"]]></serialization-matches>
-            </any-of>
+         	<any-of>
+         		<all-of>
+		            <serialization-matches flags="i"
+		               ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+		            <serialization-matches flags="i"
+		               ><![CDATA[content="text/html;\s*charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"><![CDATA[<head><meta\s+charset="UTF-8"\s?/></head>]]></serialization-matches>
+         	</any-of>
             <serialization-matches><![CDATA[<head>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</head>]]></serialization-matches>
          </all-of>
       </result>
@@ -1830,7 +1855,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+      <modified by="Sheila Thomson" on="2026-07-27" change="Alternative result for XHTML5 using meta charset instead of meta http-equiv"/>
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -1842,15 +1867,15 @@
       <result>
          <all-of>
             <serialization-matches><![CDATA[html\s*xmlns="http://www.w3.org/1999/xhtml"]]></serialization-matches>
-            <any-of>
-               <all-of>
-                  <serialization-matches flags="i"
-                     ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-                  <serialization-matches flags="i"
-                     ><![CDATA[content="application/postscript;\s*charset=UTF-8"]]></serialization-matches>
-               </all-of>
-               <serialization-matches flags="i"><![CDATA[charset="UTF-8"]]></serialization-matches>
-            </any-of>
+         	<any-of>
+         		<all-of>
+         			<serialization-matches flags="i"
+         				><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+         			<serialization-matches flags="i"
+         				><![CDATA[content="application/postscript;\s*charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"><![CDATA[<head><meta\s+charset="UTF-8"\s?/>]]></serialization-matches>
+         	</any-of>
             <serialization-matches><![CDATA[<head>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</head>]]></serialization-matches>
          </all-of>
       </result>
@@ -2051,7 +2076,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+      <modified by="Sheila Thomson" on="2026-07-27" change="Allow XHTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -2063,11 +2088,10 @@
       <result>
          <all-of>
             <serialization-matches><![CDATA[<html\s+xmlns="http://www.w3.org/1999/xhtml">]]></serialization-matches>
-            <any-of>
-            <serialization-matches flags="i"
-               ><![CDATA[<head><meta\s+http-equiv="Content-Type"\s+content="text/html;\s+charset=UTF-8"\s*/>]]></serialization-matches>
-               <serialization-matches flags="i"><![CDATA[<head><meta\s+charset="UTF-8"\s*/>]]></serialization-matches>
-            </any-of>
+         	<any-of>
+         		<serialization-matches flags="i"><![CDATA[<head><meta\s+http-equiv="Content-Type"\s+content="text/html;\s+charset=UTF-8"\s*/>]]></serialization-matches>
+         		<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?/>]]></serialization-matches>    
+         	</any-of>            
             <serialization-matches><![CDATA[<title></title></head>]]></serialization-matches>
             <serialization-matches><![CDATA[<body><p></p></body>]]></serialization-matches>
          </all-of>
@@ -2119,7 +2143,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
       <modified by="Michael Kay" on="2019-10-07" change="Alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -2129,7 +2153,14 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <serialization-matches><![CDATA[(<!DOCTYPE (HTML|html)>)?<html><head><meta (http-equiv="Content-Type" content="text/html; charset=UTF-8"|charset="UTF-8")><script type="text/javascript">document.write \("<EM>This will work<\\/EM>"\)</script></head><body></body></html>]]></serialization-matches>
+      	<all-of>
+      		<serialization-matches><![CDATA[(<!DOCTYPE (HTML|html)>)?<html><head><meta\s+]]></serialization-matches>
+      		<any-of>
+      			<serialization-matches><![CDATA[<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script\s+]]></serialization-matches>
+      			<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>\s*<script\s+]]></serialization-matches>    
+      		</any-of>
+      		<serialization-matches><![CDATA[<script type="text/javascript">document.write \("<EM>This will work<\\/EM>"\)</script></head><body></body></html>]]></serialization-matches>
+      	</all-of>         
       </result>
    </test-case>
 
@@ -2195,7 +2226,7 @@
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="Tim Mills" on="2013-01-29" change="Use serialization-matches"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -2205,21 +2236,20 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="text/html; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[="text/html; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-            <all-of>
-               <serialization-matches><![CDATA[meta charset="UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-         </any-of>
+         <all-of>
+         	<any-of>
+         		<all-of>
+         			<serialization-matches flags="i"
+         				><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+         			<serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
+         			<serialization-matches flags="i"
+         				><![CDATA[content="text/html; charset=UTF-8"]]></serialization-matches>
+         			<serialization-matches><![CDATA[="text/html; charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>]]></serialization-matches>    
+         	</any-of>            
+            <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
+         </all-of>
       </result>
    </test-case>
 
@@ -2229,7 +2259,7 @@
          from spec.</description>
       <created by="XSLT Editors" on="2012-11-07"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -2239,21 +2269,20 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <all-of>
-               <serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
-               <serialization-matches><![CDATA[="text/html; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches flags="i"
-                  ><![CDATA[content="text/html; charset=UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-            <all-of> 
-               <serialization-matches><![CDATA[meta charset="UTF-8"]]></serialization-matches>
-               <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
-            </all-of>
-         </any-of>
+         <all-of>
+         	<any-of>
+         		<all-of>
+         			<serialization-matches><![CDATA[="Content-Type"]]></serialization-matches>
+         			<serialization-matches flags="i"
+         				><![CDATA[http-equiv="Content-Type"]]></serialization-matches>
+         			<serialization-matches><![CDATA[="text/html; charset=UTF-8"]]></serialization-matches>
+         			<serialization-matches flags="i"
+         				><![CDATA[content="text/html; charset=UTF-8"]]></serialization-matches>
+         		</all-of>
+         		<serialization-matches flags="i"><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>]]></serialization-matches>  
+         	</any-of>            
+            <serialization-matches><![CDATA[<HEAD>[^<]*<[Mm][Ee][Tt][Aa][^>\\]*>[^<]*</HEAD>]]></serialization-matches>
+         </all-of>
       </result>
    </test-case>
 
@@ -2262,7 +2291,7 @@
          from spec. The escaping must be done manually. </description>
       <created by="Michael Kay" on="2012-10-30"/>
       <modified by="John Lumley" on="2014-09-02" change="Declared serialization requirement"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+   	  <modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <environment ref="output-01"/>
       <dependencies>
          <spec value="XSLT20+"/>
@@ -2273,7 +2302,10 @@
       </test>
       <result>
          <all-of>
-            <serialization-matches><![CDATA[<meta\s+(http-equiv="Content-Type"|charset="UTF-8")]]></serialization-matches>
+         	<any-of>
+            	<serialization-matches><![CDATA[<meta\s+http-equiv="Content-Type"]]></serialization-matches>
+         		<serialization-matches flags="i"><![CDATA[<head><meta\s+charset="UTF-8"\s?>]]></serialization-matches>  
+         	</any-of>
             <serialization-matches><![CDATA[<script\s+type="text/javascript">document\.write\s\("<EM>This will work<\\/EM>"\)\s+</script>]]></serialization-matches>
             <serialization-matches><![CDATA[<style>\s+<\s>\s&\s+</style>]]></serialization-matches>
             <!--<serialization-matches><![CDATA[<pre>\s+<b> Save    all	space here</b>\s+</pre>]]></serialization-matches>-->
@@ -4661,8 +4693,8 @@
       <modified by="Michael Kay" on="2018-05-14" change="JSON serialization requires XPath 3.1 feature"/>
       <modified by="Michael Kay" on="2019-10-07" change="Alternative result if default html-version is 5.0"/>
       <modified by="Debbie Lockett" on="2019-10-17" change="Amend alternative result if default html-version is 5.0"/>
-      <modified by="Michael Kay" on="2019-12-10" change="Allow charset in upper or lower case"/> 
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/> 
+      <modified by="Michael Kay" on="2019-12-10" change="Allow charset in upper or lower case"/>      
+   	<modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <dependencies>
          <spec value="XSLT30+"/>
          <feature value="XPath_3.1"/>
@@ -4674,11 +4706,12 @@
       <result>
          <all-of>
             <serialization-matches><![CDATA[\{"doc1":"(<!DOCTYPE (HTML|html)>)?]]></serialization-matches>
-            <serialization-matches><![CDATA[<html xmlns=\\"http:\\/\\/www\.w3\.org\\/1999\\/xhtml\\"><head><meta[^<]*<title>Document 1<\\/title>]]></serialization-matches>
-            <any-of>
-               <serialization-matches flags="i"><![CDATA[meta http-equiv=\\"Content-Type\\" content=\\"text\\/html; charset=UTF-8\\"]]></serialization-matches>
-               <serialization-matches flags="i"><![CDATA[meta charset=\\"UTF-8\\"]]></serialization-matches>
-            </any-of>
+            <serialization-matches><![CDATA[<html xmlns=\\"http:\\/\\/www\.w3\.org\\/1999\\/xhtml\\"><head><meta ]]></serialization-matches>
+         	<any-of>
+         		<serialization-matches><![CDATA[<head><meta http-equiv=\\"Content-Type\\" content=\\"text\\/html; charset=(UTF|utf)-8\\">(<\\/meta>)?<title>]]></serialization-matches>
+         		<serialization-matches><![CDATA[<head><meta charset=\\"(UTF|utf)-8\\">(<\\/meta>)?<title>]]></serialization-matches>
+         	</any-of>
+         	<serialization-matches><![CDATA[<title>Document 1<\\/title>]]></serialization-matches>
          </all-of>
       </result>
    </test-case>
@@ -4891,10 +4924,11 @@
       </result>
    </test-case>
    
+  
    <test-case name="output-0714">
       <description>An array is flattened by the HTML output method</description>
       <created by="Michael Kay" on="2018-05-14"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/> 
+   	<modified by="Sheila Thomson" on="2026-07-27" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <dependencies>
          <spec value="XSLT30+"/>
          <feature value="XPath_3.1"/>
@@ -4904,14 +4938,21 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <serialization-matches><![CDATA[<html><head><meta (http-equiv="Content-Type" content="text/html; charset=UTF-8"|charset="UTF-8")><title>A document</title></head><body><p>Some content</p></body></html>]]></serialization-matches>
+      	<all-of>
+      		<serialization-matches><![CDATA[<html><head><meta\s+]]></serialization-matches>
+      		<any-of>
+      			<serialization-matches><![CDATA[<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>]]></serialization-matches>
+      			<serialization-matches><![CDATA[<head><meta charset="UTF-8"><title>]]></serialization-matches>
+      		</any-of>
+      		<serialization-matches><![CDATA[<title>A document</title></head><body><p>Some content</p></body></html>]]></serialization-matches>
+      	</all-of>   
       </result>
    </test-case>
    
    <test-case name="output-0715">
       <description>An array is flattened by the dynamically-selected output method</description>
       <created by="Michael Kay" on="2018-05-14"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/> 
+   	<modified by="Sheila Thomson" on="2026-07-28" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <dependencies>
          <spec value="XSLT30+"/>
          <feature value="XPath_3.1"/>
@@ -4921,10 +4962,10 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <any-of>
-            <serialization-matches>http-equiv="Content-Type"</serialization-matches>
-            <serialization-matches>charset="UTF-8"</serialization-matches>
-         </any-of>
+      	<any-of>
+         	<serialization-matches>http-equiv="Content-Type"</serialization-matches>
+      		<serialization-matches>charset="UTF-8"</serialization-matches>
+      	</any-of>
       </result>
    </test-case>
    
@@ -4933,7 +4974,7 @@
       <created by="Michael Kay" on="2018-05-14"/>
       <modified by="Michael Kay" on="2019-10-07" change="Alternative result if default html-version is 5.0"/>
       <modified by="Michael Kay" on="2019-12-16" change="Allow the HTML to be indented (any tabs or newlines will be JSON-escaped)"/>
-      <modified by="Michael Kay" on="2026-08-04" change="Allow HTML5 form of charset"/>
+   	<modified by="Sheila Thomson" on="2026-07-28" change="Allow HTML5 meta/@charset instead of meta/@http-equiv" />
       <dependencies>
          <spec value="XSLT30+"/>
          <feature value="XPath_3.1"/>
@@ -4943,7 +4984,10 @@
          <output serialize="yes"/>
       </test>
       <result>
-         <serialization-matches><![CDATA[\["(<!DOCTYPE (HTML|html)>)?(\s|\\n|\\t)*<head>(\s|\\n|\\t)*<meta (http-equiv=\\"Content-Type\\"|charset=\\"UTF-8\\")]]></serialization-matches>
+      	<any-of>
+         	<serialization-matches><![CDATA[\["(<!DOCTYPE (HTML|html)>)?(\s|\\n|\\t)*<head>(\s|\\n|\\t)*<meta http-equiv=\\"Content-Type\\"]]></serialization-matches>
+      		<serialization-matches><![CDATA[\["(<!DOCTYPE (HTML|html)>)?(\s|\\n|\\t)*<head>(\s|\\n|\\t)*<meta charset=\\"UTF-8\\"]]></serialization-matches>
+      	</any-of>
       </result>
    </test-case>
    
@@ -5049,7 +5093,7 @@
          </all-of>
       </result>
    </test-case>
-   
+
    <test-case name="output-0723">
       <description>Serialization of a CR character within a comment node</description>
       <created by="Michael Kay" on="2020-09-16"/>
@@ -5222,4 +5266,166 @@
       </result>
    </test-case>
    
+   <test-case name="output-0800">
+		<description>XHTML 5 serialization per XSLT4+ must insert meta/@name = 'charset' not meta/@name = 'http-equiv' into head when include-content-type is set to true.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0800.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?/>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+   
+	<test-case name="output-0801">
+		<description>XHTML 5 serialization per XSLT4+ must not insert meta/@name = 'charset' nor meta/@name = 'http-equiv' in head when include-content-type is set to false.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0801.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0802">
+		<description>XHTML 5 serialization (default when output/@html-version is unset) per XSLT4+ must insert meta/@name = 'charset' not meta/@name = 'http-equiv' into head when include-content-type is set to true.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0802.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?/>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0803">
+		<description>XHTML 5 serialization (default when output/@html-version is unset) per XSLT4+ must not insert meta/@name = 'charset' nor meta/@name = 'http-equiv' in head when include-content-type is set to false.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0803.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0810">
+		<description>HTML 5 serialization (set via output/@html-version) per XSLT4+ must insert meta/@name = 'charset' not meta/@name = 'http-equiv' into head when include-content-type is set to true.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0810.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	
+	
+	<test-case name="output-0811">
+		<description>HTML 5 serialization (set via output/@html-version) per XSLT4+ must not insert meta/@name = 'charset' nor meta/@name = 'http-equiv' in head when include-content-type is set to false.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0811.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0812">
+		<description>HTML 5 serialization (set via output/@version) per XSLT4+ must insert meta/@name = 'charset' not meta/@name = 'http-equiv' into head when include-content-type is set to true.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0812.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0813">
+		<description>HTML 5 serialization (set via output/@version) per XSLT4+ must not insert meta/@name = 'charset' nor meta/@name = 'http-equiv' in head when include-content-type is set to false.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0813.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0814">
+		<description>HTML 5 serialization (default when neither output/@html-version nor output/@version are set) per XSLT4+ must insert meta/@name = 'charset' not meta/@name = 'http-equiv' into head when include-content-type is set to true.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0814.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*<meta\s+charset="UTF-8"\s?>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
+	<test-case name="output-0815">
+		<description>HTML 5 serialization (default when neither output/@html-version nor output/@version are set) per XSLT4+ must not insert meta/@name = 'charset' nor meta/@name = 'http-equiv' in head when include-content-type is set to false.</description>
+		<created by="Sheila Thomson" on="2026-07-01"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+			<feature value="HTML5"/>
+		</dependencies>
+		<test>
+			<stylesheet file="output-0815.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches><![CDATA[<head>\s*</head>]]></serialization-matches>
+		</result>
+	</test-case>
+	
 </test-set>
