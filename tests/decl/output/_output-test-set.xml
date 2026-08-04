@@ -5266,7 +5266,36 @@
       </result>
    </test-case>
    
-<<<<<<< HEAD
+   <test-case name="output-0733" covers-40="PR2719">
+      <description>XML serialization with line-ending and indent-unit options</description>
+      <created by="Michael Kay" on="2026-08-04"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="output-0733.xsl"/>
+         <output serialize="yes" tree="no"/>
+      </test>
+      <result>
+         <serialization-matches><![CDATA[^<a>\r\n\t<b/>\r\n</a>(\r\n)?$]]></serialization-matches>
+      </result>
+   </test-case>
+   
+   <test-case name="output-0734" covers-40="PR2719">
+      <description>Force attribute indentation</description>
+      <created by="Michael Kay" on="2026-08-04"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="output-0734.xsl"/>
+         <output serialize="yes" tree="no"/>
+      </test>
+      <result>
+         <serialization-matches><![CDATA[\n[ \t]+y=]]></serialization-matches>
+      </result>
+   </test-case>
+   
    <test-case name="output-0800">
 		<description>XHTML 5 serialization per XSLT4+ must insert meta/@name = 'charset' not meta/@name = 'http-equiv' into head when include-content-type is set to true.</description>
 		<created by="Sheila Thomson" on="2026-07-01"/>
@@ -5431,35 +5460,7 @@
 	
 
 
-   <test-case name="output-0733" covers-40="PR2719">
-      <description>XML serialization with line-ending and indent-unit options</description>
-      <created by="Michael Kay" on="2026-08-04"/>
-      <dependencies>
-         <spec value="XSLT40+"/>
-      </dependencies>
-      <test>
-         <stylesheet file="output-0733.xsl"/>
-         <output serialize="yes" tree="no"/>
-      </test>
-      <result>
-         <serialization-matches><![CDATA[^<a>\r\n\t<b/>\r\n</a>(\r\n)?$]]></serialization-matches>
-      </result>
-   </test-case>
-   
-   <test-case name="output-0734" covers-40="PR2719">
-      <description>Force attribute indentation</description>
-      <created by="Michael Kay" on="2026-08-04"/>
-      <dependencies>
-         <spec value="XSLT40+"/>
-      </dependencies>
-      <test>
-         <stylesheet file="output-0734.xsl"/>
-         <output serialize="yes" tree="no"/>
-      </test>
-      <result>
-         <serialization-matches><![CDATA[\n[ \t]+y=]]></serialization-matches>
-      </result>
-   </test-case>
+  
    
 </test-set>
 
