@@ -3,7 +3,7 @@
 
    <xsl:output method="xml" indent="yes" indent-attributes="yes"/>
 
-   <!-- Purpose: Test XML serialization with line-ending=\r\n -->
+   <!-- Purpose: Test XML serialization with forced indentation of attributes -->
 
    <xsl:template name="xsl:initial-template">
       <a><b x="1" y="2"/></a>

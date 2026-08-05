@@ -3333,4 +3333,19 @@ the un-named xsl:format (i.e. no 'name' attribute) has method "text".</assert-se
       </result>
    </test-case>
    
+   <test-case name="result-document-1604" covers-40="PR2719">
+      <description>XML serialization with line-ending, indent-unit, indent-attributes</description>
+      <created by="Michael Kay" on="2026-08-04"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="result-document-1604.xsl"/>
+         <output serialize="yes" tree="no"/>
+      </test>
+      <result>
+         <serialization-matches><![CDATA[^<a z="3" x="2" y="1"/>$]]></serialization-matches>
+      </result>
+   </test-case>
+   
 </test-set>
