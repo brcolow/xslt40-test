@@ -143,6 +143,7 @@
       <description>record type as pattern</description>
       <created by="Michael Kay" on="2020-01-27"/>
       <modified by="Michael Kay" on="2026-04-13" change="extensible record types now dropped"/>
+      <modified by="Michael Kay" on="2026-08-05" change="changes to matching rules for record types"/>
       <dependencies>
          <spec value="XSLT40+"/>
       </dependencies>
@@ -161,6 +162,7 @@
       <description>record type as pattern with an element-valued field</description>
       <created by="Michael Kay" on="2020-01-27"/>
       <modified by="Michael Kay" on="2026-04-13" change="extensible record types now dropped"/>
+      <modified by="Michael Kay" on="2026-08-05" change="changes to matching rules for record types"/>
       <dependencies>
          <spec value="XSLT40+"/>
       </dependencies>
@@ -179,6 +181,7 @@
       <description>record type as pattern with a predicate</description>
       <created by="Michael Kay" on="2020-01-27"/>
       <modified by="Michael Kay" on="2026-04-13" change="extensible record types now dropped"/>
+      <modified by="Michael Kay" on="2026-08-05" change="changes to matching rules for record types"/>
       <dependencies>
          <spec value="XSLT40+"/>
       </dependencies>
@@ -282,6 +285,7 @@
    <test-case name="record-019">
       <description>Default field type is item()+, which disallows an empty sequence or absence</description>
       <created by="Michael Kay" on="2020-01-27"/>
+      <modified by="Michael Kay" on="2026-08-06" change="The test is now valid"/>
       <dependencies>
          <spec value="XSLT40+"/>
       </dependencies>
@@ -289,7 +293,7 @@
          <stylesheet file="record-019.xsl"/>
       </test>
       <result>
-         <error code="XTTE0570"/>
+         <assert>/out="Smith"</assert>
       </result>
    </test-case>
    
@@ -310,6 +314,7 @@
    <test-case name="record-021">
       <description>Field type item()*, allows an empty sequence or absence</description>
       <created by="Michael Kay" on="2020-01-27"/>
+      <modified by="Michael Kay" on="2026-08-05" change="optional fields in records have been dropped"/>
       <dependencies>
          <spec value="XSLT40+"/>
       </dependencies>
@@ -324,7 +329,8 @@
   <test-case name="record-022">
     <description>Test relative priorities of record type patterns (non-extensible)</description>
     <created by="Michael Kay" on="2020-01-30"/>
-    <dependencies>
+    <modified by="Michael Kay" on="2026-08-05" change="changes to matching rules for record types"/>
+      <dependencies>
       <spec value="XSLT40+"/>
     </dependencies>
     <test>

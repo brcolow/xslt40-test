@@ -8,26 +8,26 @@
     expand-text="yes"
     >
   
-   <!-- Test default priorities for non-extensible record types -->
+   <!-- Test priorities for record types -->
     
-    <xsl:template match="~record(first as xs:string, last as xs:string, middle)">
+    <xsl:template match="~record(first as xs:string, last as xs:string, middle)" priority="10">
       <a><xsl:next-match/></a>
     </xsl:template>
   
-  <xsl:template match="~record(first as xs:string, last as xs:string, middle as xs:string)">
+  <xsl:template match="~record(first as xs:string, last as xs:string, middle as xs:string)" priority="11">
     <b><xsl:next-match/></b>
   </xsl:template>
   
-  <xsl:template match="~record(first as xs:NCName, last as xs:NCName, middle as xs:string)">
+  <xsl:template match="~record(first as xs:NCName, last as xs:NCName, middle as xs:string)" priority="12">
     <c><xsl:next-match/></c>
   </xsl:template>
     
     <xsl:template name="xsl:initial-template">
-        <out><xsl:apply-templates 
-          select="map{'first': xs:NCName('John'),
-                      'middle': xs:NCName('Henry'),
-                      'last': xs:NCName('Newman')}"/>
-          </out>
+      <xsl:variable name="in" select="map{'first': xs:NCName('John'),
+                                          'middle': xs:NCName('Henry'),
+                                          'last': xs:NCName('Newman')}"
+                    as="record(first as xs:NCName, middle as xs:NCName, last as xs:NCName)"/>
+        <out><xsl:apply-templates select="$in"/></out>
     </xsl:template>  
     
 </xsl:stylesheet>

@@ -8,7 +8,7 @@
     >
     
     
-    <xsl:variable name="person" as="record(first, middle? as item()*, last)" select="map{'first':'John', 'last':'Smith'}"/>
+    <xsl:variable name="person" as="record(first, middle as item()*, last)" select="map{'first':'John', 'last':'Smith'}"/>
     
     
     <xsl:template name="xsl:initial-template">
