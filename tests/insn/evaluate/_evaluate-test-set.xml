@@ -180,12 +180,30 @@
       <created by="Michael Kay" on="2012-11-07"/>
       <modified by="Michael Kay" on="2012-12-05" change="fix bug 23203"/>
       <modified by="Abel Braaksma" on="2014-09-14" change="Bug#26796: make test somewhat meaningful when ext. function is not available, by using xsl:evaluate to the equiv. function"/>
+      <dependencies>
+         <spec value="XSLT30"/>
+      </dependencies>
       <test>
          <stylesheet file="evaluate-008.xsl"/>
          <initial-template name="main"/>
       </test>
       <result>
          <assert-xml><![CDATA[<Result xmlns:Math="java:java.lang.Math">1</Result>]]></assert-xml>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-008a" covers-40="PR2213">
+      <description>Reflexive function call not recognized (trusted="false" in 4.0)</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-008.xsl"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XPST0017"/>
       </result>
    </test-case>
 
@@ -931,4 +949,385 @@
          <assert-xml><![CDATA[<Result><value pc="93">2020-03-16Z</value></Result>]]></assert-xml>
       </result>
    </test-case>
+   
+   <test-case name="evaluate-450-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`doc('eval003.xml')/doc/exp[1]`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="2+2"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-450-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`doc('eval003.xml')/doc/exp[1]`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="FODC0002"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-451-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`document('eval003.xml')/doc/exp[1]`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XTDE3160"/> <!-- document() function not recognized in xsl:evaluate -->
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-451-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`document('eval003.xml')/doc/exp[1]`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XTDE3160"/> <!-- document() function not recognized in xsl:evaluate -->
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-452-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`doc-available('eval003.xml')`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="true"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-452-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`doc-available('eval003.xml')`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="false"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-453-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`unparsed-text('eval003.xml') => contains('2+2')`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="true"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-453-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`unparsed-text('eval003.xml') => contains('2+2')`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XXXX9999"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-454-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`unparsed-text-available('eval003.xml')`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="true"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-454-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`unparsed-text-available('eval003.xml')`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="false"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-455-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`json-doc('eval450.json')?a`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="1"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-455-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`json-doc('eval450.json')?a`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XXXX9999"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-456-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`csv-doc('eval450.csv')?rows => count()`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="2"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-456-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`csv-doc('eval450.csv')?rows => count()`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XXXX9999"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-457-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`html-doc('eval450.html')//*:title`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="Mahatma Gandhi"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-457-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`html-doc('eval450.html')`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="FODC0002"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-458-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <environment>
+         <collection uri="catalog1.xml">
+            <source file="eval003.xml" uri="eval003.xml"/>
+            <source file="eval004.xml" uri="eval004.xml"/>
+         </collection>
+      </environment>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`collection('catalog1.xml') => count()`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="2"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-458-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`collection('catalog1.xml') => count()`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="FODC0002"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-459-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`(unparsed-binary('eval450.html') => parse-html()) // *:title`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="Mahatma Gandhi"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-459-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`(unparsed-binary('eval450.html') => parse-html()) // *:title`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XXXX9999"/>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-460-trusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`Q{{http://expath.org/ns/file}}read-text(resolve-uri('eval450.csv', static-base-uri())) => contains('a,b')`"/>
+         <param name="trusted" static="true" select="true()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <assert>/out="true"</assert>
+      </result>
+   </test-case>
+   
+   <test-case name="evaluate-460-untrusted" covers-40="PR2213">
+      <description>Test 4.0 trusted attribute</description>
+      <created by="Michael Kay" on="2026-08-16"/>
+      <dependencies>
+         <spec value="XSLT40+"/>
+      </dependencies>
+      <test>
+         <stylesheet file="evaluate-450.xsl"/>
+         <param name="xpath" static="true" select="`Q{{http://expath.org/ns/file}}read-text('eval450.csv') => contains('a,b')`"/>
+         <param name="trusted" static="true" select="false()"/>
+         <initial-template name="main"/>
+      </test>
+      <result>
+         <error code="XXXX9999"/>
+      </result>
+   </test-case>
+   
 </test-set>
