@@ -83,28 +83,56 @@
    <xsl:template name="t40-30">
       <xsl:note>Options on fn:document - strip-space</xsl:note>
       <out>
-         <xsl:select>document("bib.xml", {'strip-space-2684':'all'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+         <xsl:select>document("bib.xml", {'strip-space':'all'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
       </out>
    </xsl:template>
    
    <xsl:template name="t40-31">
       <xsl:note>Options on fn:document - strip-space</xsl:note>
       <out>
-         <xsl:select>document("bib.xml", {'strip-space-2684':'none'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+         <xsl:select>document("bib.xml", {'strip-space':'none'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
       </out>
    </xsl:template>
    
    <xsl:template name="t40-32">
       <xsl:note>Options on fn:document - strip-space with DTD validation</xsl:note>
       <out>
-         <xsl:select>document("bib-with-internal-dtd.xml", {'dtd-validation': true(), 'strip-space-2684':'none'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+         <xsl:select>document("bib-with-internal-dtd.xml", {'dtd-validation': true(), 'strip-space':'none'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
       </out>
    </xsl:template>
    
    <xsl:template name="t40-33">
       <xsl:note>Options on fn:document - strip-space with DTD validation</xsl:note>
       <out>
-         <xsl:select>document("bib-with-internal-dtd.xml", {'dtd-validation': true(), 'strip-space-2684':'all'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+         <xsl:select>document("bib-with-internal-dtd.xml", {'dtd-validation': true(), 'strip-space':'all'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+      </out>
+   </xsl:template>
+   
+   <xsl:template name="t40-30doc">
+      <xsl:note>Options on fn:doc - strip-space</xsl:note>
+      <out>
+         <xsl:select>doc("bib.xml", {'strip-space':'all'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+      </out>
+   </xsl:template>
+   
+   <xsl:template name="t40-31doc">
+      <xsl:note>Options on fn:doc - strip-space</xsl:note>
+      <out>
+         <xsl:select>doc("bib.xml", {'strip-space':'none'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+      </out>
+   </xsl:template>
+   
+   <xsl:template name="t40-32doc">
+      <xsl:note>Options on fn:doc - strip-space with DTD validation</xsl:note>
+      <out>
+         <xsl:select>document("bib-with-internal-dtd.xml", {'dtd-validation': true(), 'strip-space':'none'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
+      </out>
+   </xsl:template>
+   
+   <xsl:template name="t40-33doc">
+      <xsl:note>Options on fn:doc - strip-space with DTD validation</xsl:note>
+      <out>
+         <xsl:select>doc("bib-with-internal-dtd.xml", {'dtd-validation': true(), 'strip-space':'all'}) ! exists(.//text()[not(normalize-space())])</xsl:select>
       </out>
    </xsl:template>
    
@@ -135,8 +163,8 @@
    <xsl:template name="t40-43">
       <xsl:note>Options on fn:document - stable</xsl:note>
       <out>
-         <xsl:select>document("bib.xml", {'stable':true(), 'strip-space-2684':'all'}) 
-              is document("bib.xml", {'stable':true(), 'strip-space-2684':'none'})</xsl:select>
+         <xsl:select>document("bib.xml", {'stable':true(), 'strip-space':'all'}) 
+              is document("bib.xml", {'stable':true(), 'strip-space':'none'})</xsl:select>
       </out>
    </xsl:template>
    
