@@ -11,31 +11,7 @@
   <xsl:output method="text"/>
   
   <xsl:template name="xsl:initial-template">
-    <xsl:value-of select="format-number(1234567.890123456789012,
-      '#&#xA0;###.###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(1234567.890123456789012,
-      '#&#xA0;###.####&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(1234567.890123456789012,
-      '#&#xA0;###.#####&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(1234567.890123456789012,
-      '#&#xA0;###.#####&#xA0;####################','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(12345.67890123456789012,
-      '#&#xA0;###.###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(12345.67890123456789012,
-      '#&#xA0;###.####&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(12345.67890123456789012,
-      '#&#xA0;###.#####&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###&#xA0;###','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
-    <xsl:value-of select="format-number(12345.67890123456789012,
-      '#&#xA0;###.#####&#xA0;####################','c:SI')"/>
-    <xsl:text>&#xa;</xsl:text>
+    <out result="{format-number(12345.6789012345, '##,##.###,###,###')}"/>
   </xsl:template>
   
 </xsl:stylesheet>

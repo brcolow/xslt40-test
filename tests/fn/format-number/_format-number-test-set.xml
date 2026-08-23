@@ -1203,8 +1203,7 @@ __26,931.4</out>]]></assert-xml>
       </test>
       <result>
          <all-of>
-            <assert>/root/format1 = '058'</assert>
-            <assert>/root/format2 = '0000000064'</assert>
+            <assert>/out/@result = '1,23,45.678,901,234'</assert>
          </all-of>
       </result>
    </test-case>
