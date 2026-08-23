@@ -3348,4 +3348,49 @@ the un-named xsl:format (i.e. no 'name' attribute) has method "text".</assert-se
       </result>
    </test-case>
    
+   <test-case name="result-document-1700">
+		<description>Basic test of CSV serialization</description>
+		<created by="Michael Kay" on="2026-08-23"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+		</dependencies>
+		<test>
+			<stylesheet file="result-document-1700.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches>a,b,c\nd,e,f\n</serialization-matches>
+		</result>
+	</test-case>
+   
+   <test-case name="result-document-1701">
+		<description>Test of CSV serialization with custom separator and quote character</description>
+		<created by="Michael Kay" on="2026-08-23"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+		</dependencies>
+		<test>
+			<stylesheet file="result-document-1701.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches>a;b;'c;c'\nd;e;'f;f'\n</serialization-matches>
+		</result>
+	</test-case>
+   
+   <test-case name="result-document-1702">
+		<description>Test of CSV serialization with headers</description>
+		<created by="Michael Kay" on="2026-08-23"/>
+		<dependencies>
+			<spec value="XSLT40+"/>
+		</dependencies>
+		<test>
+			<stylesheet file="result-document-1702.xsl"/>
+			<output serialize="yes" tree="no"/>
+		</test>
+		<result>
+			<serialization-matches>a,b,c\nd,e,f\ng,h,i\n</serialization-matches>
+		</result>
+	</test-case>
+   
 </test-set>
