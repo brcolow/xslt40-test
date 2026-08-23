@@ -18,13 +18,13 @@
     <D><xsl:next-match/></D>
   </xsl:template>
     
-  <xsl:template match="~array(record(first, last))">
+  <xsl:template match="array(map{'first', 'last'})">
     <AT>
       <xsl:apply-templates select="?*"/>
     </AT>
   </xsl:template>
   
-  <xsl:template match="~record(first, last)">
+  <xsl:template match="map{'first', 'last'}">
     <P first="{?first}" last="{?last}"/>
   </xsl:template>
     

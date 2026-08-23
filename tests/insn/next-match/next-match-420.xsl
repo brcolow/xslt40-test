@@ -13,7 +13,7 @@
    
    <!--<xsl:template match="~record(red, green, *)">2:<xsl:next-match/></xsl:template>-->
    
-   <xsl:template match="~record(red, green, blue)">1:<xsl:next-match/></xsl:template>
+   <xsl:template match="map{'red', 'green', 'blue'}">1:<xsl:next-match/></xsl:template>
    
    <xsl:template match="~item()">6:<xsl:next-match/></xsl:template>
    

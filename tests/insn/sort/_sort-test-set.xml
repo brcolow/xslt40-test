@@ -1547,14 +1547,6 @@
             <assert>/out/item[5] = "A nice cup of tea"</assert>
             <assert>/out/item[6] = ""</assert>
          </all-of>
-         
-         <item>The last of the summer wine</item>
-         <item>The  end of civilization</item>
-         <item>The end</item>
-         <item>A walk in the park</item>
-         <item>A nice cup of tea</item>
-         <item/>
-         
       </result>
    </test-case>
    
